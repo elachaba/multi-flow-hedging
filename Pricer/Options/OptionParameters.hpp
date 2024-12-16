@@ -9,8 +9,8 @@ namespace options {
         PnlVect* dates;
 
     public:
-        OptionParameters(PnlVect* _strikes, PnlVect* _dates)
-            : option_size(_strikes->size), strikes(_strikes), dates(_dates) {}
+        OptionParameters(int _option_size, PnlVect* _strikes, PnlVect* _dates)
+            : option_size(_option_size), strikes(_strikes), dates(_dates) {}
 
 
         int getOptionSize() const { return option_size; }
