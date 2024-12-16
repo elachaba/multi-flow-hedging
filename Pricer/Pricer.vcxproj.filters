@@ -1,10 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Fichiers sources">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
     <Filter Include="Model">
       <UniqueIdentifier>{A1B2C3D4-1111-2222-3333-444455556666}</UniqueIdentifier>
     </Filter>
@@ -16,91 +12,39 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <!-- Dynamically include all .cpp files in Model -->
-    <ClCompile Include="Model\*.cpp">
+    <!-- Model -->
+    <ClCompile Include="Model\BlackScholesModel.cpp">
       <Filter>Model</Filter>
     </ClCompile>
-    <!-- Dynamically include all .hpp files in Model -->
-    <!-- Dynamically include all .cpp files in MonteCarlo -->
-    <ClCompile Include="MonteCarlo\*.cpp">
+    <ClInclude Include="Model\BlackScholesModel.hpp">
+      <Filter>Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Model\Model.hpp">
+      <Filter>Model</Filter>
+    </ClInclude>
+    <!-- MonteCarlo -->
+    <ClCompile Include="MonteCarlo\MonteCarlo.cpp">
       <Filter>MonteCarlo</Filter>
     </ClCompile>
-    <!-- Dynamically include all .hpp files in MonteCarlo -->
-    <ClInclude Include="MonteCarlo\*.hpp">
+    <ClInclude Include="MonteCarlo\MonteCarlo.hpp">
       <Filter>MonteCarlo</Filter>
     </ClInclude>
-    <!-- Dynamically include all .cpp files in Options -->
-    <ClCompile Include="Options\*.cpp">
-      <Filter>Options</Filter>
-    </ClCompile>
-    <!-- Dynamically include all .hpp files in Options -->
-    <ClCompile Include="Options\*.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="Pricer.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="Options\*.cpp">
-      <Filter>Options</Filter>
-    </ClCompile>
-    <ClCompile Include="Options\*.cpp">
+    <!-- Options -->
+    <ClCompile Include="Options\ConditionalBasketOption.cpp">
       <Filter>Options</Filter>
     </ClCompile>
     <ClCompile Include="Options\ConditionalMaxOption.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="Options\*.cpp">
       <Filter>Options</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Model\Model.hpp">
-      <Filter>Fichiers d%27en-tête</Filter>
+    <ClInclude Include="Options\IOption.hpp">
+      <Filter>Options</Filter>
     </ClInclude>
     <ClInclude Include="Options\OptionParameters.hpp">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="Options\OptionParameters.hpp">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="Model\Model.hpp">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="Options\*.hpp">
       <Filter>Options</Filter>
     </ClInclude>
-    <ClInclude Include="Model\*.hpp">
-      <Filter>Model</Filter>
-    </ClInclude>
-    <ClInclude Include="Options\*.hpp">
-      <Filter>Options</Filter>
-    </ClInclude>
-    <ClInclude Include="Model\*.hpp">
-      <Filter>Model</Filter>
-    </ClInclude>
-    <ClInclude Include="Model\Model.hpp" />
-    <ClInclude Include="Model\Model.hpp" />
-    <ClInclude Include="Options\OptionParameters.hpp" />
-    <ClInclude Include="Options\OptionParameters.hpp" />
-    <ClInclude Include="Model\*.hpp">
-      <Filter>Model</Filter>
-    </ClInclude>
-    <ClInclude Include="Options\*.hpp">
-      <Filter>Options</Filter>
-    </ClInclude>
-    <ClInclude Include="Model\*.hpp">
-      <Filter>Model</Filter>
-    </ClInclude>
-    <ClInclude Include="Options\*.hpp">
-      <Filter>Options</Filter>
-    </ClInclude>
-    <ClInclude Include="Model\Model.hpp" />
-    <ClInclude Include="Options\OptionParameters.hpp" />
-    <ClInclude Include="Model\*.hpp">
-      <Filter>Model</Filter>
-    </ClInclude>
-    <ClInclude Include="Options\*.hpp">
-      <Filter>Options</Filter>
-    </ClInclude>
+    <!-- Root Files -->
+    <ClCompile Include="Pricer.cpp">
+      <Filter></Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

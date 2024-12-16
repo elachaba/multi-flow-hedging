@@ -128,19 +128,25 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <!-- Dynamically include all .cpp and .hpp files in the Model folder -->
-    <ClCompile Include="Model\*.cpp" />
-    <ClInclude Include="Model\*.hpp" />
-    <!-- Dynamically include all .cpp and .hpp files in the MonteCarlo folder -->
-    <ClCompile Include="MonteCarlo\*.cpp" />
-    <ClInclude Include="MonteCarlo\*.hpp" />
-    <!-- Dynamically include all .cpp and .hpp files in the Options folder -->
-    <ClCompile Include="Options\*.cpp" />
-    <ClInclude Include="Options\*.hpp" />
-    <!-- Include root-level .cpp files -->
+    <!-- Model -->
+    <ClCompile Include="Model\BlackScholesModel.cpp" />
+    <ClInclude Include="Model\BlackScholesModel.hpp" />
+    <ClInclude Include="Model\Model.hpp" />
+
+    <!-- MonteCarlo -->
+    <ClCompile Include="MonteCarlo\MonteCarlo.cpp" />
+    <ClInclude Include="MonteCarlo\MonteCarlo.hpp" />
+
+    <!-- Options -->
+    <ClCompile Include="Options\ConditionalBasketOption.cpp" />
+    <ClCompile Include="Options\ConditionalMaxOption.cpp" />
+    <ClInclude Include="Options\IOption.hpp" />
+    <ClInclude Include="Options\OptionParameters.hpp" />
+
+    <!-- Root Files -->
     <ClCompile Include="Pricer.cpp" />
-    <ClInclude Include="*.hpp" />
   </ItemGroup>
+
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
