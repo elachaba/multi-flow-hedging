@@ -1,0 +1,52 @@
+# General Visual Studio
+.vs/                         # Visual Studio local settings folder
+*.user                        # User-specific project settings
+*.suo                         # Solution User Options
+*.cache                       # Cache files
+*.log                         # Log files
+*.sqlite                      # Local SQLite databases
+
+# Build artifacts
+bin/
+obj/
+Debug/
+Release/
+
+# Temporary files
+*.tmp
+*.bak
+*.old
+*.swp
+
+# C++ specific
+*.o
+*.obj
+*.exe
+*.out
+*.dll
+*.lib
+*.a
+*.so
+*.d
+
+# C# specific
+*.exe
+*.dll
+*.pdb
+*.mdb
+*.csproj.user
+*.nuget/
+
+# Protobuf and gRPC generated files
+*.pb.h
+*.pb.cc
+*.pb.cpp
+*.pb.cs
+
+# JSON output files
+*.json
+
+# IDE and editor specific
+.idea/
+*.sln.docstates
+Thumbs.db
