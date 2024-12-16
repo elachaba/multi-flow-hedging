@@ -13,10 +13,54 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Model">
+      <UniqueIdentifier>{A1B2C3D4-1111-2222-3333-444455556666}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MonteCarlo">
+      <UniqueIdentifier>{B2C3D4E5-2222-3333-4444-555566667777}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Options">
+      <UniqueIdentifier>{C3D4E5F6-3333-4444-5555-666677778888}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Pricer.cpp">
+    <!-- Dynamically include all .cpp files in Model -->
+    <ClCompile Include="Model\*.cpp">
+      <Filter>Model</Filter>
+    </ClCompile>
+    <!-- Dynamically include all .hpp files in Model -->
+    <ClInclude Include="Model\*.hpp">
+      <Filter>Model</Filter>
+    </ClInclude>
+    <!-- Dynamically include all .cpp files in MonteCarlo -->
+    <ClCompile Include="MonteCarlo\*.cpp">
+      <Filter>MonteCarlo</Filter>
+    </ClCompile>
+    <!-- Dynamically include all .hpp files in MonteCarlo -->
+    <ClInclude Include="MonteCarlo\*.hpp">
+      <Filter>MonteCarlo</Filter>
+    </ClInclude>
+    <!-- Dynamically include all .cpp files in Options -->
+    <ClCompile Include="Options\*.cpp">
+      <Filter>Options</Filter>
+    </ClCompile>
+    <!-- Dynamically include all .hpp files in Options -->
+    <ClInclude Include="Options\*.hpp">
+      <Filter>Options</Filter>
+    </ClInclude>
+    <ClCompile Include="Options\*.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
+    <ClCompile Include="*.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Model\*.hpp">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="Options\*.hpp">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

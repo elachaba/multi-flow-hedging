@@ -104,6 +104,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>C:\Users\ASUS\libraries\libpnl\include\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -127,7 +128,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Pricer.cpp" />
+    <!-- Dynamically include all .cpp and .hpp files in the Model folder -->
+    <ClCompile Include="Model\*.cpp" />
+    <ClInclude Include="Model\*.hpp" />
+    <!-- Dynamically include all .cpp and .hpp files in the MonteCarlo folder -->
+    <ClCompile Include="MonteCarlo\*.cpp" />
+    <ClInclude Include="MonteCarlo\*.hpp" />
+    <!-- Dynamically include all .cpp and .hpp files in the Options folder -->
+    <ClCompile Include="Options\*.cpp" />
+    <ClInclude Include="Options\*.hpp" />
+    <!-- Include root-level .cpp files -->
+    <ClCompile Include="*.cpp" />
+    <ClInclude Include="*.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
