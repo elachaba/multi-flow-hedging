@@ -138,7 +138,7 @@
     <ClCompile Include="Options\*.cpp" />
     <ClInclude Include="Options\*.hpp" />
     <!-- Include root-level .cpp files -->
-    <ClCompile Include="*.cpp" />
+    <ClCompile Include="Pricer.cpp" />
     <ClInclude Include="*.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

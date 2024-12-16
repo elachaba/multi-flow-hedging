@@ -3,10 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35219.272
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HedgingApp", "HedgingApp\HedgingApp.vcxproj", "{B18BFC64-91E9-4E08-9F1B-FFDEBF716C22}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MCPricer", "MCPricer\MCPricer.vcxproj", "{9EB5451B-C038-447B-91D8-378E34512B7F}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Pricer", "Pricer\Pricer.vcxproj", "{101B6167-6C7A-4AB8-A264-FF472E7137BF}"
 EndProject
 Global
@@ -17,22 +13,6 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{B18BFC64-91E9-4E08-9F1B-FFDEBF716C22}.Debug|x64.ActiveCfg = Debug|x64
-		{B18BFC64-91E9-4E08-9F1B-FFDEBF716C22}.Debug|x64.Build.0 = Debug|x64
-		{B18BFC64-91E9-4E08-9F1B-FFDEBF716C22}.Debug|x86.ActiveCfg = Debug|Win32
-		{B18BFC64-91E9-4E08-9F1B-FFDEBF716C22}.Debug|x86.Build.0 = Debug|Win32
-		{B18BFC64-91E9-4E08-9F1B-FFDEBF716C22}.Release|x64.ActiveCfg = Release|x64
-		{B18BFC64-91E9-4E08-9F1B-FFDEBF716C22}.Release|x64.Build.0 = Release|x64
-		{B18BFC64-91E9-4E08-9F1B-FFDEBF716C22}.Release|x86.ActiveCfg = Release|Win32
-		{B18BFC64-91E9-4E08-9F1B-FFDEBF716C22}.Release|x86.Build.0 = Release|Win32
-		{9EB5451B-C038-447B-91D8-378E34512B7F}.Debug|x64.ActiveCfg = Debug|x64
-		{9EB5451B-C038-447B-91D8-378E34512B7F}.Debug|x64.Build.0 = Debug|x64
-		{9EB5451B-C038-447B-91D8-378E34512B7F}.Debug|x86.ActiveCfg = Debug|Win32
-		{9EB5451B-C038-447B-91D8-378E34512B7F}.Debug|x86.Build.0 = Debug|Win32
-		{9EB5451B-C038-447B-91D8-378E34512B7F}.Release|x64.ActiveCfg = Release|x64
-		{9EB5451B-C038-447B-91D8-378E34512B7F}.Release|x64.Build.0 = Release|x64
-		{9EB5451B-C038-447B-91D8-378E34512B7F}.Release|x86.ActiveCfg = Release|Win32
-		{9EB5451B-C038-447B-91D8-378E34512B7F}.Release|x86.Build.0 = Release|Win32
 		{101B6167-6C7A-4AB8-A264-FF472E7137BF}.Debug|x64.ActiveCfg = Debug|x64
 		{101B6167-6C7A-4AB8-A264-FF472E7137BF}.Debug|x64.Build.0 = Debug|x64
 		{101B6167-6C7A-4AB8-A264-FF472E7137BF}.Debug|x86.ActiveCfg = Debug|Win32
