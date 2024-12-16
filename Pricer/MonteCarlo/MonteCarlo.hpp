@@ -9,7 +9,7 @@ namespace pricer {
 		const models::Model& model;
 		const unsigned long samples_number;
 		const double t; // pricing time
-		MonteCarlo(const options::IOption& _option, const models::Model& _model, const unsigned long _samples, const double _t) :
+		MonteCarlo(const options::IOption& _option, const models::Model& _model,  const unsigned long _samples, const double _t) :
 			option(_option), model(_model), samples_number(_samples), t(_t) {}
 
 		void price(double& price, double& confidence_interval);
