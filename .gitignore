@@ -50,3 +50,6 @@ Release/
 .idea/
 *.sln.docstates
 Thumbs.db
+
+#Project specific files
+Pricer/build/
