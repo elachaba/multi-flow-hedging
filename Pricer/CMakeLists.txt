@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.25)
 
-project(PricerEngine C CXX)
+project(Pricer C CXX)
 
 # Release or Debug
 if (NOT CMAKE_BUILD_TYPE)
