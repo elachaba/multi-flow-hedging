@@ -3,7 +3,7 @@
 #include "pnl/pnl_matrix.h"
 #include "pnl/pnl_vector.h"
 
-namespace model {
+namespace models {
 
     class Model {
     public:

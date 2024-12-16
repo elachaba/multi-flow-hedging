@@ -4,7 +4,7 @@
 #include "pnl/pnl_matrix.h"
 #include "Model.hpp"
 
-namespace model {
+namespace models {
 
     /**
      * @brief Class representing the Black-Scholes Model

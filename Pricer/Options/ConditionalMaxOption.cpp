@@ -8,7 +8,7 @@ namespace options {
         OptionParameters& parameters;
 
     public:
-        ConditionalBasketOption(OptionParameters& params) : parameters(params) {}
+        ConditionalMaxOption(OptionParameters& params) : parameters(params) {}
 
 
         double payoff(PnlMat* underlying_paths) const override {

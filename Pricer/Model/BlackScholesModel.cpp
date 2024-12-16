@@ -3,7 +3,7 @@
 #include <iostream>
 #include "pnl/pnl_random.h"
 
-namespace model {
+namespace models {
 
     BlackScholesModel::BlackScholesModel(double sigma, double r)
         : sigma_(sigma), r_(r) {}
