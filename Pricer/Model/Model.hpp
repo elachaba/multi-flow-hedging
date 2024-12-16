@@ -1,30 +1,38 @@
 #pragma once
-#ifndef MODEL_H
-#define MODEL_H
 
 #include "pnl/pnl_matrix.h"
+#include "pnl/pnl_vector.h"
 
 namespace model {
 
     class Model {
     public:
-        virtual ~Model() = default; // Destructeur virtuel
+        virtual ~Model() = default;
 
         /**
-         * @brief Simule les trajectoires d'actifs sous probabilité risque-neutre.
-         * @param path Matrice pour stocker les trajectoires. Chaque colonne représente un actif.
-         * @param T Horizon temporel de la simulation.
-         * @param N Nombre de pas de temps.
-         * @param S0 Vecteur des valeurs initiales des actifs.
+         * @brief Simulates the paths of the underlying assets prices under risk-neutral probability.
+         * @param path Matrix to stock the paths. Every column corresponds to an asset.
+         * @param final_time Time horizon of the simulation.
+         * @param nb_time_steps Number of time steps.
+         * @param spots Spots vector.
          */
-        virtual void simulate(PnlMat* path, double T, int N, const PnlVect* S0) const = 0;
+        virtual void simulate_path_from_zero(PnlMat* path, double final_time, int nb_time_steps, const PnlVect* spots) const = 0;
 
         /**
-         * @brief Affiche les paramètres du modèle.
+         * @brief Simulates the paths of the underlying assets prices under risk-neutral probability.
+         * @param path Matrix to stock the paths. Every column corresponds to an asset.
+         * @param t Starting time of the simulation.
+         * @param final_time Time horizon of the simulation.
+         * @param nb_time_steps Number of time steps.
+         * @param past Matrix of historic past values of asset prices.
+         */
+        virtual void simulate_path_from_t(PnlMat* path, double t, double final_time, int nb_time_steps, const PnlMat* past) const = 0;
+
+        /**
+         * @brief Prints the model parameters.
          */
         virtual void printParameters() const = 0;
     };
 
 }
 
-#endif // MODEL_H
