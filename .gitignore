@@ -54,3 +54,4 @@ Thumbs.db
 #Project specific files
 Pricer/build/
 /.vs
+/Pricer/.vs/Pricer
