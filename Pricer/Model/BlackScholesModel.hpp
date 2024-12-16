@@ -15,9 +15,9 @@ namespace models {
 
         virtual ~BlackScholesModel() override = default;
 
-        void simulate_path_from_zero(PnlMat* path, double final_time, int nb_time_steps, const PnlVect* spots) const override;
+        PnlMat* simulate_path_from_zero(const PnlVect* spots) const override;
 
-        void simulate_path_from_t(PnlMat* path, double t, double final_time, int nb_time_steps, const PnlMat* past) const override;
+        PnlMat* simulate_path_from_t(double t, const PnlMat* past) const override;
 
         void printParameters() const override;
 

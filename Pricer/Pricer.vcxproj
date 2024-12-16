@@ -132,21 +132,17 @@
     <ClCompile Include="Model\BlackScholesModel.cpp" />
     <ClInclude Include="Model\BlackScholesModel.hpp" />
     <ClInclude Include="Model\Model.hpp" />
-
     <!-- MonteCarlo -->
-    <ClCompile Include="MonteCarlo\MonteCarlo.cpp" />
     <ClInclude Include="MonteCarlo\MonteCarlo.hpp" />
-
+    <ClCompile Include="MonteCarlo\MonteCarlo.cpp" />
     <!-- Options -->
     <ClCompile Include="Options\ConditionalBasketOption.cpp" />
     <ClCompile Include="Options\ConditionalMaxOption.cpp" />
     <ClInclude Include="Options\IOption.hpp" />
     <ClInclude Include="Options\OptionParameters.hpp" />
-
     <!-- Root Files -->
     <ClCompile Include="Pricer.cpp" />
   </ItemGroup>
-
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

@@ -12,20 +12,34 @@ namespace pricer {
 		MonteCarlo(const options::IOption& _option, const models::Model& _model,  const unsigned long _samples, const double _t) :
 			option(_option), model(_model), samples_number(_samples), t(_t) {}
 
+		virtual const PnlMat* const get_path() const = 0;
+
+	public:
 		void price(double& price, double& confidence_interval);
 	};
 
 	class MonteCarloAtOrigin : public MonteCarlo {
 	private:
-		const PnlMat* spots;
+		const PnlVect* spots;
+	
+	protected:
+		const PnlMat* const get_path() const {
+			return model.simulate_path_from_zero(spots);
+		}
+	
 	public:
-		MonteCarloAtOrigin(const options::IOption& _option, const models::Model& _model, const unsigned long _samples, const double _t, PnlMat* _spots) :
+		MonteCarloAtOrigin(const options::IOption& _option, const models::Model& _model, const unsigned long _samples, const double _t, PnlVect* _spots) :
 			MonteCarlo(_option, _model, _samples, _t), spots(_spots) {}
 	};
 
 	class MonteCarloAtTimeT : public MonteCarlo {
 	private:
 		const PnlMat* past;
+	
+	protected:
+		const PnlMat* const get_path() const {
+			return model.simulate_path_from_t(t, past);
+		}
 	
 	public:
 		MonteCarloAtTimeT(const options::IOption& _option, const models::Model& _model, const unsigned long _samples, const double _t, PnlMat* _past) :

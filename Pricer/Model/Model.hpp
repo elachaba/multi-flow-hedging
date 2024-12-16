@@ -16,7 +16,7 @@ namespace models {
          * @param nb_time_steps Number of time steps.
          * @param spots Spots vector.
          */
-        virtual void simulate_path_from_zero(PnlMat* path, double final_time, int nb_time_steps, const PnlVect* spots) const = 0;
+        virtual PnlMat* simulate_path_from_zero(const PnlVect* spots) const = 0;
 
         /**
          * @brief Simulates the paths of the underlying assets prices under risk-neutral probability.
@@ -26,7 +26,7 @@ namespace models {
          * @param nb_time_steps Number of time steps.
          * @param past Matrix of historic past values of asset prices.
          */
-        virtual void simulate_path_from_t(PnlMat* path, double t, double final_time, int nb_time_steps, const PnlMat* past) const = 0;
+        virtual PnlMat* simulate_path_from_t(double t, const PnlMat* past) const = 0;
 
         /**
          * @brief Prints the model parameters.

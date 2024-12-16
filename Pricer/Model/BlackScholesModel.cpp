@@ -8,11 +8,11 @@ namespace models {
     BlackScholesModel::BlackScholesModel(double sigma, double r)
         : sigma_(sigma), r_(r) {}
 
-    void BlackScholesModel::simulate_path_from_zero(PnlMat* path, double final_time, int nb_time_steps, const PnlVect* spots)  const override {
+    PnlMat* BlackScholesModel::simulate_path_from_zero(const PnlVect* spots)  const {
         // TODO: implement path simulation from zero
     }
 
-    void BlackScholesModel::simulate_path_from_t(PnlMat* path, double t, double final_time, int nb_time_steps, const PnlMat* past) const override {
+    PnlMat* BlackScholesModel::simulate_path_from_t(double t, const PnlMat* past) const {
         // TODO: implement path simulation from time t > 0
     }
 

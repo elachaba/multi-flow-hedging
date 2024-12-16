@@ -23,9 +23,6 @@
       <Filter>Model</Filter>
     </ClInclude>
     <!-- MonteCarlo -->
-    <ClCompile Include="MonteCarlo\MonteCarlo.cpp">
-      <Filter>MonteCarlo</Filter>
-    </ClCompile>
     <ClInclude Include="MonteCarlo\MonteCarlo.hpp">
       <Filter>MonteCarlo</Filter>
     </ClInclude>
@@ -44,7 +41,11 @@
     </ClInclude>
     <!-- Root Files -->
     <ClCompile Include="Pricer.cpp">
-      <Filter></Filter>
+      <Filter>
+      </Filter>
+    </ClCompile>
+    <ClCompile Include="MonteCarlo\MonteCarlo.cpp">
+      <Filter>MonteCarlo</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
