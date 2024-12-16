@@ -43,6 +43,9 @@
     <ClCompile Include="Options\*.cpp">
       <Filter>Options</Filter>
     </ClCompile>
+    <ClCompile Include="Options\*.cpp">
+      <Filter>Options</Filter>
+    </ClCompile>
     <ClCompile Include="Options\ConditionalMaxOption.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
@@ -57,12 +60,6 @@
     <ClInclude Include="Options\OptionParameters.hpp">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="Model\Model.hpp">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="Options\OptionParameters.hpp">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
     <ClInclude Include="Options\OptionParameters.hpp">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
@@ -91,6 +88,14 @@
     <ClInclude Include="Options\*.hpp">
       <Filter>Options</Filter>
     </ClInclude>
+    <ClInclude Include="Model\*.hpp">
+      <Filter>Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Options\*.hpp">
+      <Filter>Options</Filter>
+    </ClInclude>
+    <ClInclude Include="Model\Model.hpp" />
+    <ClInclude Include="Options\OptionParameters.hpp" />
     <ClInclude Include="Model\*.hpp">
       <Filter>Model</Filter>
     </ClInclude>
