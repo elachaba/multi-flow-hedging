@@ -1,6 +1,4 @@
 #pragma once
-#ifndef IOPTION_H
-#define IOPTION_H
 
 #include "pnl/pnl_matrix.h"
 
@@ -12,5 +10,3 @@ namespace options {
     };
 
 }
-
-#endif
