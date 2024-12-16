@@ -12,12 +12,12 @@ namespace model {
 
         /**
          * @brief Simule les trajectoires d'actifs sous probabilité risque-neutre.
-         * @param path Matrice pour stocker les trajectoires.
+         * @param path Matrice pour stocker les trajectoires. Chaque colonne représente un actif.
          * @param T Horizon temporel de la simulation.
          * @param N Nombre de pas de temps.
-         * @param S0 Valeur initiale de l'actif.
+         * @param S0 Vecteur des valeurs initiales des actifs.
          */
-        virtual void simulate(PnlMat* path, double T, int N, double S0) const = 0;
+        virtual void simulate(PnlMat* path, double T, int N, const PnlVect* S0) const = 0;
 
         /**
          * @brief Affiche les paramètres du modèle.
@@ -27,4 +27,4 @@ namespace model {
 
 }
 
-#endif
+#endif // MODEL_H
