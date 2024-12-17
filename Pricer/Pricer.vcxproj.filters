@@ -10,6 +10,9 @@
     <Filter Include="Options">
       <UniqueIdentifier>{C3D4E5F6-3333-4444-5555-666677778888}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Tests">
+      <UniqueIdentifier>{b9055977-4348-417e-8022-e032475bc7e9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <!-- Model -->
@@ -46,6 +49,9 @@
     </ClCompile>
     <ClCompile Include="MonteCarlo\MonteCarlo.cpp">
       <Filter>MonteCarlo</Filter>
+    </ClCompile>
+    <ClCompile Include="Tests\BlackScholesModelTest.cpp">
+      <Filter>Tests</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

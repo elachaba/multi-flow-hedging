@@ -113,6 +113,3 @@ target_link_libraries(BlackScholesModelTest
 )
 
 add_test(NAME BlackScholesModelTest COMMAND BlackScholesModelTest)
-
-
-

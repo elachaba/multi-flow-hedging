@@ -50,7 +50,7 @@ namespace models {
 			pnl_vect_free(&spots);
 			pnl_vect_free(&monitoring_dates);
 			pnl_rng_free(&rng);
-			delete model;
+			
 		}
 	};
 
