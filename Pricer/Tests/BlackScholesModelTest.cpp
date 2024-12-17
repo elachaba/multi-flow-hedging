@@ -24,7 +24,7 @@ namespace models {
 			nb_underlying = 5;
 
 			// Monitoring dates
-			monitoring_dates = pnl_vect_create_from_list(4, 0.17063492063492064, 0.25793650793650796, 0.3333333333333333, 0.4246031746031746);
+			monitoring_dates = pnl_vect_create_from_list(5, 0.0, 0.17063492063492064, 0.25793650793650796, 0.3333333333333333, 0.4246031746031746);
 			
 			// Volatility-Cholesky matrix (provided directly)
 			volchol = pnl_mat_create_from_list(nb_underlying, nb_underlying,
@@ -95,6 +95,7 @@ namespace models {
 
 	// Main function to run all Google Tests
 	int main(int argc, char** argv) {
+		// run the tests
 		::testing::InitGoogleTest(&argc, argv);
 		return RUN_ALL_TESTS();
 	}
