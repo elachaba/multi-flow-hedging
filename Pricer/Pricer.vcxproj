@@ -104,11 +104,12 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\ASUS\libraries\libpnl\include\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\ASUS\libraries\libpnl\include\;C:\Users\ASUS\vcpkg\installed\x64-windows\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>C:\Users\ASUS\libraries\libpnl\lib</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -130,6 +131,7 @@
   <ItemGroup>
     <!-- Model -->
     <ClCompile Include="Model\BlackScholesModel.cpp" />
+    <ClCompile Include="Tests\BlackScholesModelTest.cpp" />
     <ClInclude Include="Model\BlackScholesModel.hpp" />
     <ClInclude Include="Model\Model.hpp" />
     <!-- MonteCarlo -->

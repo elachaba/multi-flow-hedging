@@ -23,7 +23,7 @@ namespace models {
             MLET(path, 0, j) = GET(spots, j);
         }
 
-        for (int i = 1; i <= nb_steps; i++) {
+        for (int i = 1; i < nb_steps; i++) {
             pnl_vect_rng_normal(gaussian, nb_underlying, rng_);   // Generate Z ~ N(0, I)
             pnl_mat_mult_vect_inplace(dW, volchol_, gaussian);    // Introduce correlation : dW = volchol * Z
             double dt = GET(monitoring_dates_, i) - GET(monitoring_dates_, i - 1);
@@ -67,7 +67,7 @@ namespace models {
             i++;
         }
 
-        for (i; i <= nb_steps; i++) {
+        for (i = 1; i < nb_steps; i++) {
             pnl_vect_rng_normal(gaussian, nb_underlying, rng_);   // Generate Z ~ N(0, I)
             pnl_mat_mult_vect_inplace(dW, volchol_, gaussian);    // Introduce correlation : dW = volchol * Z
             double dt = GET(monitoring_dates_, i) - GET(monitoring_dates_, i - 1);
