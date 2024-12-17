@@ -53,7 +53,6 @@ namespace models {
 		}
 	};
 
-
 	TEST_F(BlackScholesModelTest, SimulatedPricesMatchBlackScholesMean) {
 		int num_paths = 10000; // Number of Monte Carlo paths
 		int nb_steps = monitoring_dates->size + 1; // Total time steps
