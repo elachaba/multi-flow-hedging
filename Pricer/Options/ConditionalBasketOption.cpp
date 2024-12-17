@@ -11,7 +11,7 @@ namespace options {
         ConditionalBasketOption(OptionParameters& params) : parameters(params) {}
 
 
-        double payoff(PnlMat* underlying_paths) const override {
+        double payoff(const PnlMat* const underlying_paths) const override {
             //TODO: Implementation of the payoff function
         }
     };
