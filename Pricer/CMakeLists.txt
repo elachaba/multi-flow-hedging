@@ -29,6 +29,12 @@ message(STATUS "Using gRPC ${gRPC_VERSION}")
 set(_GRPC_GRPCPP gRPC::grpc++)
 set(_GRPC_CPP_PLUGIN_EXECUTABLE $<TARGET_FILE:gRPC::grpc_cpp_plugin>)
 
+# Find Google Test
+find_package(GTest REQUIRED)
+# Include GTest headers
+include_directories(${GTEST_INCLUDE_DIRS})
+
+
 # Proto file
 get_filename_component(pricer_proto "pricing.proto" ABSOLUTE)
 get_filename_component(pricer_proto_path "${pricer_proto}" PATH)
@@ -65,34 +71,48 @@ find_package(nlohmann_json REQUIRED)
 include_directories("${CMAKE_CURRENT_BINARY_DIR}")
 
 # pricer_grpc_proto
-add_library(pricer_grpc_proto
-    ${pricer_grpc_srcs}
-    ${pricer_grpc_hdrs}
-    ${pricer_proto_srcs}
-    ${pricer_proto_hdrs}
-)
-target_link_libraries(pricer_grpc_proto
-    ${_REFLECTION}
-    ${_GRPC_GRPCPP}
-    ${_PROTOBUF_LIBPROTOBUF}
-)
+#add_library(pricer_grpc_proto
+#    ${pricer_grpc_srcs}
+#    ${pricer_grpc_hdrs}
+#    ${pricer_proto_srcs}
+#    ${pricer_proto_hdrs}
+#)
+#target_link_libraries(pricer_grpc_proto
+#    ${_REFLECTION}
+#    ${_GRPC_GRPCPP}
+#    ${_PROTOBUF_LIBPROTOBUF}
+#)
+#
+#add_executable(pricing_server pricing_server.cpp pricer.cpp json_reader.cpp )
+#target_link_libraries(pricing_server
+#    pricer_grpc_proto
+#    ${_REFLECTION}
+#    ${_GRPC_GRPCPP}
+#    ${_PROTOBUF_LIBPROTOBUF}
+#    ${PNL_LIBRARIES}
+#    nlohmann_json::nlohmann_json
+#)
+#pnl_add_postbuild(pricing_server)
+#
+#add_executable(test_json_reader json_reader.cpp test_json_reader.cpp)
+#target_link_libraries(test_json_reader
+#    ${PNL_LIBRARIES}
+#    nlohmann_json::nlohmann_json
+#)
+#pnl_add_postbuild(test_json_reader)
+#
+enable_testing()
 
-add_executable(pricing_server pricing_server.cpp pricer.cpp json_reader.cpp )
-target_link_libraries(pricing_server
-    pricer_grpc_proto
-    ${_REFLECTION}
-    ${_GRPC_GRPCPP}
-    ${_PROTOBUF_LIBPROTOBUF}
+add_executable(BlackScholesModelTest Model/BlackScholesModel.cpp Tests/BlackScholesModelTest.cpp)
+
+target_link_libraries(BlackScholesModelTest
+    GTest::GTest
+    GTest::Main
     ${PNL_LIBRARIES}
     nlohmann_json::nlohmann_json
 )
-pnl_add_postbuild(pricing_server)
 
-add_executable(test_json_reader json_reader.cpp test_json_reader.cpp)
-target_link_libraries(test_json_reader
-    ${PNL_LIBRARIES}
-    nlohmann_json::nlohmann_json
-)
-pnl_add_postbuild(test_json_reader)
+add_test(NAME BlackScholesModelTest COMMAND BlackScholesModelTest)
+
 
 
