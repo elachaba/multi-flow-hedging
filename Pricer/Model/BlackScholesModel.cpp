@@ -11,7 +11,7 @@ namespace models {
     PnlMat* BlackScholesModel::simulate_path_from_zero(const PnlVect* spots)  const {
 
         int nb_underlying = spots->size;
-        int nb_steps = monitoring_dates_->size + 1;
+        int nb_steps = monitoring_dates_->size;
         PnlMat* path = pnl_mat_create(nb_steps, nb_underlying);
 
         PnlVect* gaussian = pnl_vect_create(nb_underlying);

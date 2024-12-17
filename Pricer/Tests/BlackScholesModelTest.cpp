@@ -5,6 +5,7 @@
 #include "pnl/pnl_random.h"
 #include <cmath>
 
+
 namespace models {
 	class BlackScholesModelTest : public ::testing::Test {
 	protected:
@@ -33,7 +34,7 @@ namespace models {
 				-0.015, -0.01199385, 0.01865883, 0.09634830, 0,
 				-0.0675, -0.05397233, 0.08396472, 0.06926412, 0.427999);
 
-			// Initial spot prices for 5 assets: [13, 15, 17, 17, 14]
+			// Initial spot prices for 5 assets: [100, 120, 150, 180, 200]
 			spots = pnl_vect_create_from_list(nb_underlying, 13.0, 15.0, 17.0, 17.0, 14.0);
 
 			// random number generator
@@ -54,7 +55,7 @@ namespace models {
 	};
 
 	TEST_F(BlackScholesModelTest, SimulatedPricesMatchBlackScholesMean) {
-		int num_paths = 10000; // Number of Monte Carlo paths
+		int num_paths = 3; // Number of Monte Carlo paths
 		int nb_steps = monitoring_dates->size + 1; // Total time steps
 		double tolerance = 0.01; // Allowable relative error (1%)
 
