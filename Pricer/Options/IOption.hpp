@@ -6,7 +6,7 @@ namespace options {
 
     class IOption {
     public:
-        virtual double payoff(PnlMat* underlying_paths) const = 0;
+        virtual double payoff(const PnlMat* const underlying_paths) const = 0;
     };
 
 }
