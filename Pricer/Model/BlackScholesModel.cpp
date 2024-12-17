@@ -1,33 +1,67 @@
 #include "BlackScholesModel.hpp"
 #include <cmath>
 #include <iostream>
-#include "pnl/pnl_random.h"
+
 
 namespace models {
 
-    BlackScholesModel::BlackScholesModel(double sigma, double r)
-        : sigma_(sigma), r_(r) {}
+    BlackScholesModel::BlackScholesModel(PnlMat* volchol, double r, double maturity, int nbSteps, PnlRng* rng)
+        : volchol_(volchol), r_(r), maturity_(maturity), nbSteps_(nbSteps), rng_(rng) {}
 
     PnlMat* BlackScholesModel::simulate_path_from_zero(const PnlVect* spots)  const {
-        // TODO: implement path simulation from zero
+
+        int nb_underlying = spots->size;
+        PnlMat* path = pnl_mat_create(nbSteps_, nb_underlying);
+        double dt = maturity_ / nbSteps_;
+
+        PnlVect* gaussian = pnl_vect_create(nb_underlying);
+        PnlVect* dW = pnl_vect_create(nb_underlying);
+        PnlVect* tmp = pnl_vect_create(nb_underlying);
+
+
+        for (int j = 0; j < nb_underlying; j++) {
+            MLET(path, 0, j) = GET(spots, j);
+        }
+
+        for (int i = 1; i <= nbSteps_; i++) {
+            pnl_vect_rng_normal(gaussian, nb_underlying, rng_);   // Générer Z ~ N(0, I)
+            pnl_mat_mult_vect_inplace(dW, volchol_, gaussian);    // Introduire la corrélation : dW = volchol * Z
+            
+
+            for (int j = 0; j < nb_underlying; j++) {
+                double St_prev = MGET(path, i - 1, j);            // Prix précédent S_{t-dt}
+                pnl_mat_get_row(tmp, volchol_, j);
+                double sigma_j = pnl_vect_norm_two(tmp);      // Approximation de la volatilité pour l'actif j
+                double drift = (r_ - 0.5 * sigma_j * sigma_j) * dt;
+                double diffusion =  sqrt(dt) * GET(dW, j);
+
+                // Mise à jour de S_t,j avec la formule de Black-Scholes
+                MLET(path, i, j) = St_prev * exp(drift + diffusion);
+            }
+        }
+
+        // Libération de la mémoire temporaire
+        pnl_vect_free(&gaussian);
+        pnl_vect_free(&dW);
+        pnl_vect_free(&tmp);
+
+        return path;
     }
 
     PnlMat* BlackScholesModel::simulate_path_from_t(double t, const PnlMat* past) const {
         // TODO: implement path simulation from time t > 0
     }
 
-    void BlackScholesModel::printParameters() const {
-        std::cout << "Black-Scholes Model Parameters:" << std::endl;
-        std::cout << "Volatility (sigma): " << sigma_ << std::endl;
-        std::cout << "Risk free rate (r): " << r_ << std::endl;
-    }
-
-    double BlackScholesModel::getSigma() const {
-        return sigma_;
-    }
-
     double BlackScholesModel::getRiskFreeRate() const {
         return r_;
+    }
+
+    double BlackScholesModel::getMaturity() const {
+        return maturity_;
+    }
+
+    int BlackScholesModel::getNumTimeSteps() const {
+        return nbSteps_;
     }
 
 }

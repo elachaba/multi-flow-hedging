@@ -2,6 +2,7 @@
 
 #include "pnl/pnl_vector.h"
 #include "pnl/pnl_matrix.h"
+#include "pnl/pnl_random.h"
 #include "Model.hpp"
 
 namespace models {
@@ -11,7 +12,7 @@ namespace models {
      */
     class BlackScholesModel : public Model {
     public:
-        BlackScholesModel(double sigma, double r);
+        BlackScholesModel(PnlMat* volchol, double r, double maturity, int nbSteps, PnlRng* rng);
 
         virtual ~BlackScholesModel() override = default;
 
@@ -19,17 +20,16 @@ namespace models {
 
         PnlMat* simulate_path_from_t(double t, const PnlMat* past) const override;
 
-        void printParameters() const override;
-
-   
-        double getSigma() const;
-
-
         double getRiskFreeRate() const;
+        double getMaturity() const;
+        int getNumTimeSteps() const;
 
     private:
-        double sigma_;
-        double r_;
+        PnlMat* volchol_;    // Volatilité
+        double r_;        // Taux sans risque
+        double maturity_;        // Maturité de l'option
+        int nbSteps_;           // Nombre de pas de temps
+        PnlRng* rng_;
     };
 
 }

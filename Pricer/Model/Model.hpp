@@ -28,10 +28,6 @@ namespace models {
          */
         virtual PnlMat* simulate_path_from_t(double t, const PnlMat* past) const = 0;
 
-        /**
-         * @brief Prints the model parameters.
-         */
-        virtual void printParameters() const = 0;
     };
 
 }
