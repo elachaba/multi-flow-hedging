@@ -5,14 +5,14 @@
 
 namespace models {
 
-    BlackScholesModel::BlackScholesModel(PnlMat* volchol, double r, double maturity, int nbSteps, PnlRng* rng)
-        : volchol_(volchol), r_(r), maturity_(maturity), nbSteps_(nbSteps), rng_(rng) {}
+    BlackScholesModel::BlackScholesModel(PnlMat* volchol, double r, PnlVect* monitoring_dates, PnlRng* rng)
+        : volchol_(volchol), r_(r), monitoring_dates_(monitoring_dates), rng_(rng) {}
 
     PnlMat* BlackScholesModel::simulate_path_from_zero(const PnlVect* spots)  const {
 
         int nb_underlying = spots->size;
-        PnlMat* path = pnl_mat_create(nbSteps_, nb_underlying);
-        double dt = maturity_ / nbSteps_;
+        int nb_steps = monitoring_dates_->size + 1;
+        PnlMat* path = pnl_mat_create(nb_steps, nb_underlying);
 
         PnlVect* gaussian = pnl_vect_create(nb_underlying);
         PnlVect* dW = pnl_vect_create(nb_underlying);
@@ -23,10 +23,10 @@ namespace models {
             MLET(path, 0, j) = GET(spots, j);
         }
 
-        for (int i = 1; i <= nbSteps_; i++) {
+        for (int i = 1; i <= nb_steps; i++) {
             pnl_vect_rng_normal(gaussian, nb_underlying, rng_);   // Generate Z ~ N(0, I)
             pnl_mat_mult_vect_inplace(dW, volchol_, gaussian);    // Introduce correlation : dW = volchol * Z
-            
+            double dt = GET(monitoring_dates_, i) - GET(monitoring_dates_, i - 1);
 
             for (int j = 0; j < nb_underlying; j++) {
                 double St_prev = MGET(path, i - 1, j);            // Previous price S_{t-dt}
@@ -49,7 +49,15 @@ namespace models {
     }
 
     PnlMat* BlackScholesModel::simulate_path_from_t(double t, const PnlMat* past) const {
-        // TODO: implement path simulation from time t > 0
+
+
+
+
+
+
+
+
+
     }
 
     double BlackScholesModel::getRiskFreeRate() const {

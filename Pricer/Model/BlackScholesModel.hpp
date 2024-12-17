@@ -12,7 +12,7 @@ namespace models {
      */
     class BlackScholesModel : public Model {
     public:
-        BlackScholesModel(PnlMat* volchol, double r, double maturity, int nbSteps, PnlRng* rng);
+        BlackScholesModel(PnlMat* volchol, double r, PnlVect* monitoring_dates, PnlRng* rng);
 
         virtual ~BlackScholesModel() override = default;
 
@@ -27,8 +27,7 @@ namespace models {
     private:
         PnlMat* volchol_;    // Volatility
         double r_;        // Risk-free rate
-        double maturity_;        // Final Time of the simulation
-        int nbSteps_;           // Number of time steps
+        PnlVect* monitoring_dates_; // dates of simulation
         PnlRng* rng_;
     };
 
