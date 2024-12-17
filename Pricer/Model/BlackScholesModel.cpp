@@ -24,23 +24,23 @@ namespace models {
         }
 
         for (int i = 1; i <= nbSteps_; i++) {
-            pnl_vect_rng_normal(gaussian, nb_underlying, rng_);   // Générer Z ~ N(0, I)
-            pnl_mat_mult_vect_inplace(dW, volchol_, gaussian);    // Introduire la corrélation : dW = volchol * Z
+            pnl_vect_rng_normal(gaussian, nb_underlying, rng_);   // Generate Z ~ N(0, I)
+            pnl_mat_mult_vect_inplace(dW, volchol_, gaussian);    // Introduce correlation : dW = volchol * Z
             
 
             for (int j = 0; j < nb_underlying; j++) {
-                double St_prev = MGET(path, i - 1, j);            // Prix précédent S_{t-dt}
+                double St_prev = MGET(path, i - 1, j);            // Previous price S_{t-dt}
                 pnl_mat_get_row(tmp, volchol_, j);
-                double sigma_j = pnl_vect_norm_two(tmp);      // Approximation de la volatilité pour l'actif j
+                double sigma_j = pnl_vect_norm_two(tmp);      // volatility of asset j
                 double drift = (r_ - 0.5 * sigma_j * sigma_j) * dt;
                 double diffusion =  sqrt(dt) * GET(dW, j);
 
-                // Mise à jour de S_t,j avec la formule de Black-Scholes
+                // update S_t,j
                 MLET(path, i, j) = St_prev * exp(drift + diffusion);
             }
         }
 
-        // Libération de la mémoire temporaire
+        // free tmp memory
         pnl_vect_free(&gaussian);
         pnl_vect_free(&dW);
         pnl_vect_free(&tmp);

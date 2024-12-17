@@ -25,10 +25,10 @@ namespace models {
         int getNumTimeSteps() const;
 
     private:
-        PnlMat* volchol_;    // Volatilité
-        double r_;        // Taux sans risque
-        double maturity_;        // Maturité de l'option
-        int nbSteps_;           // Nombre de pas de temps
+        PnlMat* volchol_;    // Volatility
+        double r_;        // Risk-free rate
+        double maturity_;        // Final Time of the simulation
+        int nbSteps_;           // Number of time steps
         PnlRng* rng_;
     };
 
