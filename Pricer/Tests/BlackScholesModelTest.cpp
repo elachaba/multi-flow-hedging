@@ -5,7 +5,6 @@
 #include "pnl/pnl_random.h"
 #include <cmath>
 
-
 namespace models {
 	class BlackScholesModelTest : public ::testing::Test {
 	protected:
@@ -25,7 +24,7 @@ namespace models {
 
 			// Monitoring dates
 			monitoring_dates = pnl_vect_create_from_list(4, 0.17063492063492064, 0.25793650793650796, 0.3333333333333333, 0.4246031746031746);
-			
+
 			// Volatility-Cholesky matrix (provided directly)
 			volchol = pnl_mat_create_from_list(nb_underlying, nb_underlying,
 				0.3, 0, 0, 0, 0,
@@ -34,7 +33,7 @@ namespace models {
 				-0.015, -0.01199385, 0.01865883, 0.09634830, 0,
 				-0.0675, -0.05397233, 0.08396472, 0.06926412, 0.427999);
 
-			// Initial spot prices for 5 assets: [100, 120, 150, 180, 200]
+			// Initial spot prices for 5 assets: [13, 15, 17, 17, 14]
 			spots = pnl_vect_create_from_list(nb_underlying, 13.0, 15.0, 17.0, 17.0, 14.0);
 
 			// random number generator
@@ -92,11 +91,5 @@ namespace models {
 		}
 
 		pnl_mat_free(&mean_prices);
-	}
-
-	// Main function to run all Google Tests
-	int main(int argc, char** argv) {
-		::testing::InitGoogleTest(&argc, argv);
-		return RUN_ALL_TESTS();
 	}
 }
