@@ -64,12 +64,5 @@ namespace models {
         return r_;
     }
 
-    double BlackScholesModel::getMaturity() const {
-        return maturity_;
-    }
-
-    int BlackScholesModel::getNumTimeSteps() const {
-        return nbSteps_;
-    }
-
+    
 }

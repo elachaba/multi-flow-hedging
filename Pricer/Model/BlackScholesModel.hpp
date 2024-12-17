@@ -21,8 +21,6 @@ namespace models {
         PnlMat* simulate_path_from_t(double t, const PnlMat* past) const override;
 
         double getRiskFreeRate() const;
-        double getMaturity() const;
-        int getNumTimeSteps() const;
 
     private:
         PnlMat* volchol_;    // Volatility
