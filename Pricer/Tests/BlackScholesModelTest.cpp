@@ -89,7 +89,7 @@ namespace models {
 					<< "Mismatch at time step " << step << ", asset " << j;
 			}
 		}
-
+		// free matrix
 		pnl_mat_free(&mean_prices);
 	}
 
