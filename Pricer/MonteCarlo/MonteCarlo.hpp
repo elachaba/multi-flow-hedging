@@ -28,8 +28,8 @@ namespace pricer {
 		}
 	
 	public:
-		MonteCarloAtOrigin(const options::IOption& _option, const models::Model& _model, const unsigned long _samples, const double _t, PnlVect* _spots) :
-			MonteCarlo(_option, _model, _samples, _t), spots(_spots) {}
+		MonteCarloAtOrigin(const options::IOption& _option, const models::Model& _model, const unsigned long _samples, PnlVect* _spots) :
+			MonteCarlo(_option, _model, _samples, 0.0), spots(_spots) {}
 	};
 
 	class MonteCarloAtTimeT : public MonteCarlo {
