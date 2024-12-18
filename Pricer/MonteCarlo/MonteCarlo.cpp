@@ -16,6 +16,5 @@ void pricer::MonteCarlo::price(double& price, double& confidence_interval) {
 	double variance = squared_sum / samples_number - price * price;
 	confidence_interval = 1.96 * sqrt(variance / samples_number);
 
-	pnl_vect_free(&payoffs);
 
 }
