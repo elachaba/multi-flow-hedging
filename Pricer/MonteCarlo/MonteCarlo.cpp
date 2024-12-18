@@ -10,7 +10,7 @@ void pricer::MonteCarlo::price(double& price, double& confidence_interval) {
 		const PnlMat* const path = get_path();
 		double payoff = option.discounted_payoff(path, r, t);
 		sum += payoff;
-		squared_sum = payoff * payoff;
+		squared_sum += payoff * payoff;
 	}
 	price = sum / samples_number;
 	double variance = squared_sum / samples_number - price * price;
