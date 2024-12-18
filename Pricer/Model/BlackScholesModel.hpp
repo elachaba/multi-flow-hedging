@@ -20,6 +20,8 @@ namespace models {
 
         PnlMat* simulate_path_from_t(double t, const PnlMat* past) const override;
 
+        PnlMat* shift_asset(const PnlMat* const path, double t, int asset, double forward_step_) const override;
+
     protected:
         PnlMat* volchol_;    // Volatility
         PnlVect* observation_dates_; // dates of simulation

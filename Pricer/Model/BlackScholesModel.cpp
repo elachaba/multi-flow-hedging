@@ -8,6 +8,7 @@ namespace models {
     BlackScholesModel::BlackScholesModel(PnlMat* volchol, double r, PnlVect* observation_dates, PnlRng* rng)
         : volchol_(volchol), observation_dates_(observation_dates), rng_(rng) {
         this->r_ = r;
+        this->model_size = volchol->m;
     }
 
     PnlMat* BlackScholesModel::simulate_path_from_zero(const PnlVect* spots)  const {
@@ -72,6 +73,20 @@ namespace models {
         pnl_vect_free(&gaussian);
         pnl_vect_free(&dW);
         pnl_vect_free(&tmp);
+    }
+
+    PnlMat* BlackScholesModel::shift_asset(const PnlMat* const path, double t, int asset, double forward_step_) const {
+        PnlMat* shifted = pnl_mat_copy(path);
+        int nb_time_steps = observation_dates_->size;
+
+        // compute the index corresponding to t
+        int idx = 0;
+        while (idx < nb_time_steps - 1 && GET(observation_dates_, idx) < t) {
+            idx++;
+        }
+
+        for (int i = idx; i < shifted->m; i++)
+            MLET(shifted, i, asset) = MGET(path, i, asset) * (1 + forward_step_);
     }
 
 
