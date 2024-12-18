@@ -28,10 +28,14 @@ namespace models {
          */
         virtual PnlMat* simulate_path_from_t(double t, const PnlMat* past) const = 0;
 
+        virtual PnlMat* shift_asset(const PnlMat* const path, double t, int asset, double forward_step_) const = 0;
+
         double getRiskFreeRate() const { return r_;  }
+        double getModelSize() const { return model_size; }
 
     
     protected:
+        int model_size;
         double r_; // risk-free rate
     };
 
