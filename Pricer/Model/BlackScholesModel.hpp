@@ -22,7 +22,7 @@ namespace models {
 
         double getRiskFreeRate() const;
 
-    private:
+    protected:
         PnlMat* volchol_;    // Volatility
         double r_;        // Risk-free rate
         PnlVect* monitoring_dates_; // dates of simulation
