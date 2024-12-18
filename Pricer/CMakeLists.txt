@@ -103,7 +103,7 @@ include_directories("${CMAKE_CURRENT_BINARY_DIR}")
 #
 enable_testing()
 
-add_executable(BlackScholesModelTest Model/BlackScholesModel.cpp Tests/BlackScholesModelTest.cpp)
+add_executable(BlackScholesModelTest Model/BlackScholesModel.cpp Tests/BlackScholesModelTest.cpp Tests/BlackScholesModelTestHelper.cpp)
 
 target_link_libraries(BlackScholesModelTest
     GTest::GTest
