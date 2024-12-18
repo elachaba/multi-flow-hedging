@@ -5,13 +5,13 @@
 
 namespace models {
 
-    BlackScholesModel::BlackScholesModel(PnlMat* volchol, double r, PnlVect* monitoring_dates, PnlRng* rng)
-        : volchol_(volchol), r_(r), monitoring_dates_(monitoring_dates), rng_(rng) {}
+    BlackScholesModel::BlackScholesModel(PnlMat* volchol, double r, PnlVect* observation_dates, PnlRng* rng)
+        : volchol_(volchol), r_(r), observation_dates_(observation_dates), rng_(rng) {}
 
     PnlMat* BlackScholesModel::simulate_path_from_zero(const PnlVect* spots)  const {
 
         int nb_underlying = spots->size;
-        int nb_steps = monitoring_dates_->size;
+        int nb_steps = observation_dates_->size;
         PnlMat* path = pnl_mat_create(nb_steps, nb_underlying);
 
         PnlVect* gaussian = pnl_vect_create(nb_underlying);
@@ -26,7 +26,7 @@ namespace models {
         for (int i = 1; i < nb_steps; i++) {
             pnl_vect_rng_normal(gaussian, nb_underlying, rng_);   // Generate Z ~ N(0, I)
             pnl_mat_mult_vect_inplace(dW, volchol_, gaussian);    // Introduce correlation : dW = volchol * Z
-            double dt = GET(monitoring_dates_, i) - GET(monitoring_dates_, i - 1);
+            double dt = GET(observation_dates_, i) - GET(observation_dates_, i - 1);
 
             for (int j = 0; j < nb_underlying; j++) {
                 double St_prev = MGET(path, i - 1, j);            // Previous price S_{t-dt}
@@ -51,7 +51,7 @@ namespace models {
     PnlMat* BlackScholesModel::simulate_path_from_t(double t, const PnlMat* past) const {
 
         int nb_underlying = past->n;
-        int nb_steps = monitoring_dates_->size + 1;
+        int nb_steps = observation_dates_->size;
         PnlMat* path = pnl_mat_create(nb_steps, nb_underlying);
 
         PnlVect* gaussian = pnl_vect_create(nb_underlying);
@@ -60,17 +60,17 @@ namespace models {
         
         int i = 0;
 
-        while (GET(monitoring_dates_, i) <= t) {
+        while (i < nb_steps && GET(observation_dates_, i) <= t) {
             for (int j = 0; j < nb_underlying; j++) {
                 MLET(path, i, j) = MGET(past, i, j);
             }
             i++;
         }
 
-        for (i = 1; i < nb_steps; i++) {
+        for (i; i < nb_steps; i++) {
             pnl_vect_rng_normal(gaussian, nb_underlying, rng_);   // Generate Z ~ N(0, I)
             pnl_mat_mult_vect_inplace(dW, volchol_, gaussian);    // Introduce correlation : dW = volchol * Z
-            double dt = GET(monitoring_dates_, i) - GET(monitoring_dates_, i - 1);
+            double dt = GET(observation_dates_, i) - GET(observation_dates_, i - 1);
 
             for (int j = 0; j < nb_underlying; j++) {
                 double St_prev = MGET(path, i - 1, j);            // Previous price S_{t-dt}

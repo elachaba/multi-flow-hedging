@@ -12,7 +12,7 @@ namespace models {
      */
     class BlackScholesModel : public Model {
     public:
-        BlackScholesModel(PnlMat* volchol, double r, PnlVect* monitoring_dates, PnlRng* rng);
+        BlackScholesModel(PnlMat* volchol, double r, PnlVect* observation_dates, PnlRng* rng);
 
         virtual ~BlackScholesModel() override = default;
 
@@ -25,7 +25,7 @@ namespace models {
     protected:
         PnlMat* volchol_;    // Volatility
         double r_;        // Risk-free rate
-        PnlVect* monitoring_dates_; // dates of simulation
+        PnlVect* observation_dates_; // dates of simulation
         PnlRng* rng_;
     };
 
