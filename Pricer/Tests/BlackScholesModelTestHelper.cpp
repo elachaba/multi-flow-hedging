@@ -6,7 +6,7 @@ namespace models {
     // Testing functions
     PnlMat* BlackScholesModelTestHelper::simulate_path_from_zero_test(const PnlVect* spots, PnlMat* precomputed_guassians) {
         int nb_underlying = spots->size;
-        int nb_steps = monitoring_dates_->size;
+        int nb_steps = observation_dates_->size;
         PnlMat* path = pnl_mat_create(nb_steps, nb_underlying);
 
         PnlVect* gaussian = pnl_vect_create(nb_underlying);
@@ -21,7 +21,7 @@ namespace models {
         for (int i = 1; i < nb_steps; i++) {
             pnl_mat_get_row(gaussian, precomputed_guassians, i - 1);
             pnl_mat_mult_vect_inplace(dW, volchol_, gaussian);    // Introduce correlation : dW = volchol * Z
-            double dt = GET(monitoring_dates_, i) - GET(monitoring_dates_, i - 1);
+            double dt = GET(observation_dates_, i) - GET(observation_dates_, i - 1);
 
             for (int j = 0; j < nb_underlying; j++) {
                 double St_prev = MGET(path, i - 1, j);            // Previous price S_{t-dt}
@@ -46,7 +46,7 @@ namespace models {
     PnlMat* BlackScholesModelTestHelper::simulate_path_alternative(const PnlVect* spots, const PnlVect* sigma,
         const PnlMat* corr, const PnlMat* precomputed_gaussians) const {
         int nb_underlying = spots->size;
-        int nb_steps = monitoring_dates_->size; // Include the initial step t=0
+        int nb_steps = observation_dates_->size; // Include the initial step t=0
         PnlMat* path = pnl_mat_create(nb_steps, nb_underlying);
         // Cholesky Decomposition for simulation
         PnlMat* chol = pnl_mat_copy(corr);
@@ -63,7 +63,7 @@ namespace models {
 
         // Time stepping
         for (int i = 1; i < nb_steps; i++) {
-            double dt = GET(monitoring_dates_, i) - GET(monitoring_dates_, i - 1);
+            double dt = GET(observation_dates_, i) - GET(observation_dates_, i - 1);
             pnl_mat_get_row(gaussians, precomputed_gaussians, i - 1);
             pnl_mat_mult_vect_inplace(correlated_gaussians, chol, gaussians);
 
