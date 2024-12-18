@@ -28,6 +28,11 @@ namespace models {
          */
         virtual PnlMat* simulate_path_from_t(double t, const PnlMat* past) const = 0;
 
+        double getRiskFreeRate() const { return r_;  }
+
+    
+    protected:
+        double r_; // risk-free rate
     };
 
 }

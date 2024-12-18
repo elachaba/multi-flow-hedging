@@ -20,13 +20,13 @@ namespace models {
 
         PnlMat* simulate_path_from_t(double t, const PnlMat* past) const override;
 
-        double getRiskFreeRate() const;
-
     protected:
         PnlMat* volchol_;    // Volatility
-        double r_;        // Risk-free rate
         PnlVect* observation_dates_; // dates of simulation
         PnlRng* rng_;
+    
+    private:
+        void fill_path_from_row(PnlMat* path, int row, int nb_steps, int nb_underlying) const;
     };
 
 }
