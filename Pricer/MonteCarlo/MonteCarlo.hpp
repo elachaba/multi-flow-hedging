@@ -54,6 +54,7 @@ namespace pricer {
 		MonteCarloAtTimeT(const options::IOption& _option, const models::Model& _model, const unsigned long _samples, const double _t, PnlMat* _past, const double _eps) :
 			MonteCarlo(_option, _model, _samples, _t, _eps), past(_past) {}
 
+		
 		void delta(PnlVect* deltas, PnlVect* deltas_std) {
 			double diff;
 			int nb_underlying = model.getModelSize();
@@ -73,9 +74,19 @@ namespace pricer {
 				}
 			}
 
-			for (int d = 0; d < nb_underlying; d++) {
+			// compute the index corresponding to t
+			int idx = model.get_idx_t(t);
 
+			for (int d = 0; d < nb_underlying; d++) {
+				double s_t = MGET(past, idx, d);
+				double mean = GET(deltas, d) / (2.0 * samples_number * eps);
+				double variance = GET(squared_sums, d) / (4.0 * eps * eps * samples_number) - mean * mean;
+				LET(deltas, d) = mean / s_t;
+				LET(deltas_std, d) = sqrt(variance) / (s_t * sqrt(samples_number));
 			}
+
+			pnl_vect_free(&squared_sums);
+		}
 		
 	};
 }
