@@ -56,7 +56,7 @@ namespace models {
 
 	TEST_F(BlackScholesModelTest, SimulatedPricesMatchBlackScholesMean) {
 		int num_paths = 3; // Number of Monte Carlo paths
-		int nb_steps = monitoring_dates->size + 1; // Total time steps
+		int nb_steps = monitoring_dates->size; // Total time steps
 		double tolerance = 0.01; // Allowable relative error (1%)
 
 		// Initialize array to store the sum of prices for each asset at each time step
