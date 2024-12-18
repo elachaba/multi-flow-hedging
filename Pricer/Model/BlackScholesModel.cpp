@@ -77,16 +77,22 @@ namespace models {
 
     PnlMat* BlackScholesModel::shift_asset(const PnlMat* const path, double t, int asset, double forward_step_) const {
         PnlMat* shifted = pnl_mat_copy(path);
-        int nb_time_steps = observation_dates_->size;
 
+        int idx = get_idx_t(t);
+
+        for (int i = idx; i < shifted->m; i++)
+            MLET(shifted, i, asset) = MGET(path, i, asset) * (1 + forward_step_);
+    }
+
+    int BlackScholesModel::get_idx_t(double t) const {
+        int nb_time_steps = observation_dates_->size;
         // compute the index corresponding to t
         int idx = 0;
         while (idx < nb_time_steps - 1 && GET(observation_dates_, idx) < t) {
             idx++;
         }
 
-        for (int i = idx; i < shifted->m; i++)
-            MLET(shifted, i, asset) = MGET(path, i, asset) * (1 + forward_step_);
+        return idx;
     }
 
 

@@ -30,6 +30,8 @@ namespace models {
 
         virtual PnlMat* shift_asset(const PnlMat* const path, double t, int asset, double forward_step_) const = 0;
 
+        virtual int get_idx_t(double t) const = 0;
+
         double getRiskFreeRate() const { return r_;  }
         double getModelSize() const { return model_size; }
 
