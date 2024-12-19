@@ -74,11 +74,8 @@ namespace pricer {
 				}
 			}
 
-			// compute the index corresponding to t
-			int idx = model.get_idx_t(t);
-
 			for (int d = 0; d < nb_underlying; d++) {
-				double s_t = MGET(past, idx, d);
+				double s_t = MGET(past, past->m - 1, d); // St is last row in the past
 				double mean = GET(deltas, d) / (2.0 * samples_number * eps);
 				double variance = GET(squared_sums, d) / (4.0 * eps * eps * samples_number) - mean * mean;
 				LET(deltas, d) = mean / s_t;

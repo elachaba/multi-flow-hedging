@@ -14,27 +14,24 @@ namespace options {
 
 
         PnlVect* payoff(const PnlMat* const underlying_paths) const override {
-            PnlVectInt* date_indices = parameters.get_date_indices();
-            int nb_payments = date_indices->size;
+            int nb_payments = underlying_paths->m;
             PnlVect* payments = pnl_vect_create(nb_payments);
 
             double previous_payment = 0.0; // to track P_{m-1}
 
             for (int m = 0; m < nb_payments; m++) {
-                int t_m = GET_INT(date_indices, m);
                 double max_value = -INFINITY;
 
                 // compute the max value of S_t_m^n for all assets
                 for (int n = 0; n < parameters.getOptionSize(); n++) {
-                    max_value = std::max(max_value, MGET(underlying_paths, t_m, n));
+                    max_value = std::max(max_value, MGET(underlying_paths, m, n));
                 }
                 // compute payoff
                 double payoff_m = std::max(max_value - GET(parameters.getStrikes(), m), 0.0);
                 LET(payments, m) = (previous_payment == 0.0) ? payoff_m : 0.0;
-                previous_payment = payoff_m;
+                previous_payment = GET(payments, m);
             }
 
-            pnl_vect_int_free(&date_indices);
             
             return payments;
         }

@@ -12,18 +12,16 @@ namespace options {
 
 
         PnlVect* payoff(const PnlMat* const underlying_paths) const override {
-            PnlVectInt* date_indices = parameters.get_date_indices();
-            int nb_payments = date_indices->size; // Number of monitoring dates
+            int nb_payments = underlying_paths->m; // Number of monitoring dates
             int nb_assets = parameters.getOptionSize(); // Number of underlying assets
             PnlVect* payments = pnl_vect_create_from_zero(nb_payments); // Initialize payments with zeros
 
             for (int m = 0; m < nb_payments; m++) {
-                int t_m = GET_INT(date_indices, m);
                 double basket_value = 0.0;
 
-                // Compute the basket value as the average of all asset prices at time t_m
+                // Compute the basket value as the average of all asset prices at time m
                 for (int n = 0; n < nb_assets; n++) {
-                    basket_value += MGET(underlying_paths, t_m, n);
+                    basket_value += MGET(underlying_paths, m, n);
                 }
                 basket_value /= nb_assets;
 
@@ -37,7 +35,6 @@ namespace options {
                 }
             }
 
-            pnl_vect_int_free(&date_indices); // Free memory for date indices
             return payments;
         }
 
