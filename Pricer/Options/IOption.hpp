@@ -17,7 +17,7 @@ namespace options {
         * @param t Pricing time.
         * @return The total discounted payoff.
         */
-        virtual double discounted_payoff(const PnlMat* const underlying_paths, double r, double t) const;
+        virtual double discounted_payoff(const PnlMat* const underlying_paths, double r, double t) const = 0;
     };
 
 }
