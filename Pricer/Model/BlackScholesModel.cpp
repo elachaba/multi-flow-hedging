@@ -82,6 +82,8 @@ namespace models {
 
         for (int i = idx; i < shifted->m; i++)
             MLET(shifted, i, asset) = MGET(path, i, asset) * (1 + forward_step_);
+        
+        return shifted;
     }
 
     int BlackScholesModel::get_idx_t(double t) const {
