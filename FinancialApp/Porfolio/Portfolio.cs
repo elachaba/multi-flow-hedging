@@ -1,9 +1,4 @@
 ﻿using MarketData;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FinancialApp.PorfolioManagement
 {
@@ -11,20 +6,20 @@ namespace FinancialApp.PorfolioManagement
     {
         public Dictionary<string, double> Composition { get; private set; }
         public double Cash { get; private set; }
-        public DateTime LastInvestmentDate { get; set; }
+        public DateTime LastUpdateDate { get; set; }
 
         public Portfolio(double initCash, DateTime date)
         {
             Composition = new Dictionary<string, double>();
             Cash = initCash;
-            LastInvestmentDate = date;
+            LastUpdateDate = date;
         }
 
        public Portfolio(double cash, Dictionary<string, double> composition, DateTime date)
         {
             Composition = composition;
             Cash = cash;
-            LastInvestmentDate = date;
+            LastUpdateDate = date;
         }
 
         public double GetValue(Dictionary<string, double> spots, double riskFreeRate, double time)
@@ -34,7 +29,7 @@ namespace FinancialApp.PorfolioManagement
             {
                 if (spots.ContainsKey(asset))
                 {
-                    value = spots[asset] * Composition[asset];
+                    value += spots[asset] * Composition[asset];
                 } else
                 {
                     throw new ArgumentException($"Spot price for asset {asset} missing.");
@@ -63,7 +58,7 @@ namespace FinancialApp.PorfolioManagement
             }
 
             Cash = currValue - riskyAssetsValue;
-            LastInvestmentDate = dataFeed.Date;
+            LastUpdateDate = dataFeed.Date;
         }
 
         public double GetDiscountedCash(double riskFreeRate, double time)
