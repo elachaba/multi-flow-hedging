@@ -8,14 +8,16 @@ using namespace models;
 
 
 namespace pricer {
-	void MonteCarloPricer::price(const Model& model, const IOption& option, PnlVect* spots, double& price, double& confidence_interval) const
+	void MonteCarloPricer::pricedelta(const Model& model, const IOption& option, PnlVect* spots, double& price, double& confidence_interval, PnlVect* deltas, PnlVect* deltas_std) const
 	{
 		MonteCarloAtOrigin mco(option, model, sample_number, spots);
 		mco.price(price, confidence_interval);
+		mco.delta(deltas, deltas_std);
 	}
-	void MonteCarloPricer::price_at(const double time, const models::Model& model, const options::IOption& option, PnlMat* past, double& price, double& confidence_interval) const
+	void MonteCarloPricer::pricedelta_at(const double time, const models::Model& model, const options::IOption& option, const PnlMat* past, double& price, double& confidence_interval, PnlVect* deltas, PnlVect* deltas_std) const
 	{
 		MonteCarloAtTimeT mct(option, model, sample_number, time, past);
 		mct.price(price, confidence_interval);
+		mct.delta(deltas, deltas_std);
 	}
 }
