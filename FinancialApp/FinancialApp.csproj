@@ -7,4 +7,24 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="C:\Users\ASUS\.nuget\packages\pricinglibrary\2.0.5\contentFiles\any\net8.0\MarketDataFeed\sample_market.csv" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Google.Protobuf" Version="3.21.5" />
+    <PackageReference Include="Grpc.Net.ClientFactory" Version="2.49.0" />
+    <PackageReference Include="Grpc.Tools" Version="2.49.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="MultiCashFlow.Common" Version="1.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Protobuf Include="..\..\Equipe_14\src\FinancialSolution\FinancialApp\PricingClient\Proto\pricing.proto" GrpcServices="Client">
+      <Link>Protos\pricing.proto</Link>
+    </Protobuf>
+  </ItemGroup>
+
 </Project>
