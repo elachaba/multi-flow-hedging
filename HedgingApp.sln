@@ -5,6 +5,8 @@ VisualStudioVersion = 17.11.35219.272
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Pricer", "Pricer\Pricer.vcxproj", "{101B6167-6C7A-4AB8-A264-FF472E7137BF}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PricerTests", "PricerTests\PricerTests.vcxproj", "{0E3390AE-1768-4452-9111-7F35B882EDD4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -21,6 +23,14 @@ Global
 		{101B6167-6C7A-4AB8-A264-FF472E7137BF}.Release|x64.Build.0 = Release|x64
 		{101B6167-6C7A-4AB8-A264-FF472E7137BF}.Release|x86.ActiveCfg = Release|Win32
 		{101B6167-6C7A-4AB8-A264-FF472E7137BF}.Release|x86.Build.0 = Release|Win32
+		{0E3390AE-1768-4452-9111-7F35B882EDD4}.Debug|x64.ActiveCfg = Debug|x64
+		{0E3390AE-1768-4452-9111-7F35B882EDD4}.Debug|x64.Build.0 = Debug|x64
+		{0E3390AE-1768-4452-9111-7F35B882EDD4}.Debug|x86.ActiveCfg = Debug|Win32
+		{0E3390AE-1768-4452-9111-7F35B882EDD4}.Debug|x86.Build.0 = Debug|Win32
+		{0E3390AE-1768-4452-9111-7F35B882EDD4}.Release|x64.ActiveCfg = Release|x64
+		{0E3390AE-1768-4452-9111-7F35B882EDD4}.Release|x64.Build.0 = Release|x64
+		{0E3390AE-1768-4452-9111-7F35B882EDD4}.Release|x86.ActiveCfg = Release|Win32
+		{0E3390AE-1768-4452-9111-7F35B882EDD4}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
