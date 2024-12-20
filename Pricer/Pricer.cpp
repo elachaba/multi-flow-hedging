@@ -13,9 +13,31 @@
 
 
 BlackScholesPricer::BlackScholesPricer(nlohmann::json& jsonParams) {
-    jsonParams.at("VolCholeskyLines").get_to(volatility);
-    jsonParams.at("MathPaymentDates").get_to(paymentDates);
-    jsonParams.at("Strikes").get_to(strikes);
+    // Handle volatility matrix
+    auto volMatrix = jsonParams.at("VolCholeskyLines").get<std::vector<std::vector<double>>>();
+    int rows = volMatrix.size();
+    int cols = volMatrix[0].size();
+    volatility = pnl_mat_create(rows, cols);
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            pnl_mat_set(volatility, i, j, volMatrix[i][j]);
+        }
+    }
+
+    // Handle payment dates vector
+    auto dates = jsonParams.at("MathPaymentDates").get<std::vector<double>>();
+    paymentDates = pnl_vect_create(dates.size());
+    for (size_t i = 0; i < dates.size(); i++) {
+        pnl_vect_set(paymentDates, i, dates[i]);
+    }
+
+    // Handle strikes vector
+    auto strikeValues = jsonParams.at("Strikes").get<std::vector<double>>();
+    strikes = pnl_vect_create(strikeValues.size());
+    for (size_t i = 0; i < strikeValues.size(); i++) {
+        pnl_vect_set(strikes, i, strikeValues[i]);
+    }
+
     jsonParams.at("DomesticInterestRate").get_to(interestRate);
     jsonParams.at("RelativeFiniteDifferenceStep").get_to(fdStep);
     jsonParams.at("SampleNb").get_to(nSamples);
@@ -24,9 +46,15 @@ BlackScholesPricer::BlackScholesPricer(nlohmann::json& jsonParams) {
 }
 
 BlackScholesPricer::~BlackScholesPricer() {
-    pnl_vect_free(&paymentDates);
-    pnl_vect_free(&strikes);
-    pnl_mat_free(&volatility);
+    if (paymentDates) {
+        pnl_vect_free(&paymentDates);
+    }
+    if (strikes) {
+        pnl_vect_free(&strikes);
+    }
+    if (volatility) {
+        pnl_mat_free(&volatility);
+    }
 }
 
 void BlackScholesPricer::print() {
@@ -85,7 +113,7 @@ void BlackScholesPricer::priceAndDeltas(const PnlMat* past, double currentDate, 
     priceStdDev = 0.0;
 
     // Call pricedelta_at method for any currentDate (including t = 0)
-    mc_pricer.pricedelta_at(currentDate, model, *option, past, price, priceStdDev, deltas, deltasStdDev);
+    mc_pricer.pricedelta_at(currentDate, model, *option, past, price, priceStdDev, deltas, deltasStdDev, fdStep);
 
 
 
@@ -93,63 +121,3 @@ void BlackScholesPricer::priceAndDeltas(const PnlMat* past, double currentDate, 
     
 }
 
-
-
-int main() {
-    // Exemple de paramètres JSON pour initialiser le BlackScholesPricer
-    nlohmann::json jsonParams = {
-    {"VolCholeskyLines", {
-        {0.3, 0, 0, 0, 0},
-        {0.055, 0.24387496796514396, 0, 0, 0},
-        {-0.0375, -0.029984627208829176, 0.24534602530130287, 0, 0},
-        {-0.015, -0.011993850883531672, 0.018658826230573976, 0.09634830431658281, 0},
-        {-0.0675, -0.05397232897589252, 0.08396471803758289, 0.0692641235193512, 0.4279990011937917}
-    }},
-    {"MathPaymentDates", {0.17063492063492064, 0.25793650793650796, 0.3333333333333333}},
-    {"Strikes", {15, 19, 18}},
-    {"DomesticInterestRate", 0.05},
-    {"RelativeFiniteDifferenceStep", 0.1},
-    {"SampleNb", 4},
-    {"PayoffType", "ConditionalBasket"}
-    };
-
-
-    try {
-        // Initialisation du pricer avec les paramètres JSON
-        BlackScholesPricer pricer(jsonParams);
-
-        // Impression des paramètres pour vérifier l'initialisation
-        pricer.print();
-
-
-        // Déclaration des variables pour priceAndDeltas
-        PnlMat* past = pnl_mat_create_from_scalar(2, 2, 100.0); // Exemple de données passées
-        double currentDate = 0.5;
-        bool isMonitoringDate = true;
-        double price, priceStdDev;
-        PnlVect* deltas = nullptr;
-        PnlVect* deltasStdDev = nullptr;
-
-        // Appel de la méthode priceAndDeltas
-        pricer.priceAndDeltas(past, currentDate, isMonitoringDate, price, priceStdDev, deltas, deltasStdDev);
-
-        // Affichage des résultats
-        std::cout << "Price: " << price << std::endl;
-        std::cout << "Price StdDev: " << priceStdDev << std::endl;
-        std::cout << "Deltas: ";
-        pnl_vect_print_asrow(deltas);
-        std::cout << "Deltas StdDev: ";
-        pnl_vect_print_asrow(deltasStdDev);
-
-        // Libération des ressources
-        pnl_mat_free(&past);
-        pnl_vect_free(&deltas);
-        pnl_vect_free(&deltasStdDev);
-
-    }
-    catch (const std::exception& e) {
-        std::cerr << "Erreur : " << e.what() << std::endl;
-    }
-
-    return 0;
-}

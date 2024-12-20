@@ -9,7 +9,6 @@ void pricer::MonteCarlo::price(double& price, double& confidence_interval) {
 	PnlVect* payoffs;
 	for (int i = 0; i < samples_number; i++) {
 		const PnlMat* const path = get_path();
-		pnl_mat_print(path);
 		double payoff = option.discounted_payoff(path, r, t);
 		sum += payoff;
 		squared_sum += payoff * payoff;
@@ -41,9 +40,6 @@ void pricer::MonteCarlo::delta(PnlVect* deltas, PnlVect* deltas_std) {
 		}
 	}
 
-	std::cout << " hna " << std::endl;
-	pnl_vect_print(deltas);
-	std::cout << " hna " << std::endl;
 
 
 	const PnlMat* _past = get_past();
@@ -56,9 +52,6 @@ void pricer::MonteCarlo::delta(PnlVect* deltas, PnlVect* deltas_std) {
 		LET(deltas_std, d) = sqrt(variance) / (s_t * sqrt(samples_number));
 	}
 
-	std::cout << " hna apres " << std::endl;
-	pnl_vect_print(deltas);
-	std::cout << " hna apres " << std::endl;
 
 	pnl_vect_free(&squared_sums);
 }
