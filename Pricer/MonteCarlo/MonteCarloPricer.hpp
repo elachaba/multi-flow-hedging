@@ -11,7 +11,7 @@ namespace pricer {
 
 	public:
 		MonteCarloPricer(const unsigned long sample_nb) : sample_number(sample_nb) {};
-		void price(const models::Model& model, const options::IOption& option, PnlVect* spots, double& price, double& confidence_interval) const;
-		void price_at(const double time, const models::Model& underlying_model, const options::IOption& option, PnlMat* past, double& price, double& confidence_interval) const;
+		void pricedelta(const models::Model& model, const options::IOption& option, PnlVect* spots, double& price, double& confidence_interval, PnlVect* deltas, PnlVect* deltas_std) const;
+		void pricedelta_at(const double time, const models::Model& underlying_model, const options::IOption& option, const PnlMat* past, double& price, double& confidence_interval, PnlVect* deltas, PnlVect* deltas_std) const;
 	};
 }

@@ -14,9 +14,11 @@ namespace pricer {
 			option(_option), model(_model), samples_number(_samples), t(_t), eps(_eps){}
 
 		virtual const PnlMat* const get_path() const = 0;
+		virtual const PnlMat* get_past() const = 0;
 
 	public:
 		void price(double& price, double& confidence_interval);
+		void delta(PnlVect* deltas, PnlVect* deltas_std);
 	};
 
 
@@ -28,6 +30,12 @@ namespace pricer {
 	protected:
 		const PnlMat* const get_path() const {
 			return model.simulate_path_from_zero(spots);
+		}
+
+		const PnlMat* get_past() const {
+			PnlMat* past = pnl_mat_create(1, spots->size);
+			pnl_mat_set_row(past, spots, 0);
+			return past;
 		}
 	
 	public:
@@ -47,43 +55,19 @@ namespace pricer {
 		const PnlMat* const get_path() const {
 			return model.simulate_path_from_t(t, past);
 		}
+
+		const PnlMat* get_past() const {
+			return past;
+		}
 	
 	public:
-		MonteCarloAtTimeT(const options::IOption& _option, const models::Model& _model, const unsigned long _samples, const double _t, PnlMat* _past) :
+		MonteCarloAtTimeT(const options::IOption& _option, const models::Model& _model, const unsigned long _samples, const double _t, const PnlMat* _past) :
 			MonteCarlo(_option, _model, _samples, _t, 0.0), past(_past) {}
-		MonteCarloAtTimeT(const options::IOption& _option, const models::Model& _model, const unsigned long _samples, const double _t, PnlMat* _past, const double _eps) :
+		MonteCarloAtTimeT(const options::IOption& _option, const models::Model& _model, const unsigned long _samples, const double _t, const PnlMat* _past, const double _eps) :
 			MonteCarlo(_option, _model, _samples, _t, _eps), past(_past) {}
 
 		
-		void delta(PnlVect* deltas, PnlVect* deltas_std) {
-			double diff;
-			int nb_underlying = model.getModelSize();
-			double r = model.getRiskFreeRate();
-			PnlVect* squared_sums = pnl_vect_create(nb_underlying);
-
-			for (int m = 0; m < samples_number; m++) {
-				const PnlMat* const path = get_path();
-				for (int d = 0; d < nb_underlying; d++) {
-					PnlMat* shifted_up = model.shift_asset(path, t, d, eps);
-					PnlMat* shifted_down = model.shift_asset(path, t, d, -eps);
-					diff = option.discounted_payoff(shifted_up, r, t) - option.discounted_payoff(shifted_down, r, t);
-					LET(deltas, d) = GET(deltas, d) + diff;
-					LET(squared_sums, d) = GET(squared_sums, d) + diff * diff;
-					pnl_mat_free(&shifted_down);
-					pnl_mat_free(&shifted_up);
-				}
-			}
-
-			for (int d = 0; d < nb_underlying; d++) {
-				double s_t = MGET(past, past->m - 1, d); // St is last row in the past
-				double mean = GET(deltas, d) / (2.0 * samples_number * eps);
-				double variance = GET(squared_sums, d) / (4.0 * eps * eps * samples_number) - mean * mean;
-				LET(deltas, d) = mean / s_t;
-				LET(deltas_std, d) = sqrt(variance) / (s_t * sqrt(samples_number));
-			}
-
-			pnl_vect_free(&squared_sums);
-		}
+		
 		
 	};
 }
