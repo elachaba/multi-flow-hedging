@@ -58,7 +58,7 @@ BlackScholesPricer::~BlackScholesPricer() {
 }
 
 void BlackScholesPricer::print() {
-    std::cout << " === Pricer Parameters === " << std::endl;
+    std::cout << " === Pricer Math Parameters === " << std::endl;
     std::cout << "nAssets: " << nAssets << std::endl;
     std::cout << "fdStep: " << fdStep << std::endl;
     std::cout << "nSamples: " << nSamples << std::endl;
@@ -77,7 +77,6 @@ void BlackScholesPricer::priceAndDeltas(const PnlMat* past, double currentDate, 
     // Initialize the option based on payoffType
     options::IOption* option = nullptr;
 
-    // Assuming you have access to option parameters
     int option_size = past->n;
     options::OptionParameters params(option_size, strikes, paymentDates);
 
@@ -85,13 +84,12 @@ void BlackScholesPricer::priceAndDeltas(const PnlMat* past, double currentDate, 
     if (payoffType == "ConditionalBasket") {
         option = new options::ConditionalBasketOption(params);
     }
-    else if (payoffType == "MaxBasket") {
+    else if (payoffType == "ConditionalMax") {
         option = new options::ConditionalMaxOption(params);
     }
     else {
         throw std::invalid_argument("Unknown payoff type: " + payoffType);
     }
-
 
     // Create a random number generator
     PnlRng* rng = pnl_rng_create(PNL_RNG_MERSENNE);
@@ -99,7 +97,7 @@ void BlackScholesPricer::priceAndDeltas(const PnlMat* past, double currentDate, 
 
     // Instantiate the Black-Scholes model
     models::BlackScholesModel model(volatility, interestRate, paymentDates, rng);
-    
+
 
     // Create MonteCarloPricer with the number of samples
     pricer::MonteCarloPricer mc_pricer(nSamples);

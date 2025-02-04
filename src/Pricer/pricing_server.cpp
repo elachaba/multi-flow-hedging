@@ -49,6 +49,7 @@ public:
     GrpcPricerImpl(BlackScholesPricer& pricer) : pricer(pricer) {}
 
     Status PriceAndDeltas(ServerContext* context, const PricingInput* input, PricingOutput* output) override {
+
         double price, priceStdDev;
         PnlVect* delta, * deltaStdDev;
         bool isMonitoringDate = input->monitoringdatereached();
@@ -57,8 +58,9 @@ public:
         if (past == NULL) {
             return Status(grpc::StatusCode::INVALID_ARGUMENT, "Cannot read past");
         }
-        pnl_mat_print(past);
+
         pricer.priceAndDeltas(past, currentDate, isMonitoringDate, price, priceStdDev, delta, deltaStdDev);
+        
         output->set_price(price);
         output->set_pricestddev(priceStdDev);
         for (int i = 0; i < delta->size; i++) {
@@ -82,7 +84,6 @@ public:
 void RunServer(nlohmann::json& jsonParams) {
     std::string server_address("0.0.0.0:50051");
     BlackScholesPricer pricer(jsonParams);
-    pricer.print();
     GrpcPricerImpl service(pricer);
 
     grpc::EnableDefaultHealthCheckService(true);

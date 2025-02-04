@@ -1,6 +1,7 @@
 #include "IOption.hpp"
 #include "OptionParameters.hpp"
 #include <algorithm>
+#include "../Helper/Helper.hpp"
 
 namespace options {
 
@@ -8,7 +9,7 @@ namespace options {
     private:
         OptionParameters parameters;
     public:
-        ConditionalBasketOption(OptionParameters& params) : parameters(params) {}
+        ConditionalBasketOption(const OptionParameters& params) : parameters(params) {}
 
 
         PnlVect* payoff(const PnlMat* const underlying_paths) const override {
@@ -39,18 +40,26 @@ namespace options {
         }
 
         double discounted_payoff(const PnlMat* const underlying_paths, double r, double t) const override {
-            double result = 0.0;
-            PnlVect* payments = payoff(underlying_paths); // Compute payoffs
+            PnlVect* payments = payoff(underlying_paths);
             const PnlVect* monitoring_dates = parameters.getMonitoringDates();
 
-            for (int m = 0; m < payments->size; m++) {
-                double t_m = GET(monitoring_dates, m);
-                if (t_m < t) continue; // Ignore dates before pricing time t
-                double payment_m = GET(payments, m);
-                result += payment_m * exp(-r * (t_m - t)); // Discount payoff
+            // Calculate discount factors for all dates
+            PnlVect* discount_factors = pnl_vect_create_from_scalar(monitoring_dates->size, t);
+            pnl_vect_minus_vect(discount_factors, monitoring_dates);
+
+            // Convert time differences to discount factors
+            for (int m = 0; m < monitoring_dates->size; m++) {
+                double time_diff = GET(discount_factors, m);  // t - t_m
+                LET(discount_factors, m) = exp(r * time_diff);
             }
 
+            // Use scalar product to compute total discounted value
+            double result = pnl_vect_scalar_prod(payments, discount_factors);
+
+            // Cleanup
             pnl_vect_free(&payments);
+            pnl_vect_free(&discount_factors);
+
             return result;
         }
 

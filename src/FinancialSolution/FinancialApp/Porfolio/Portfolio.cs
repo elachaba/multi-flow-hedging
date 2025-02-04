@@ -15,26 +15,21 @@ namespace FinancialApp.PorfolioManagement
             LastUpdateDate = date;
         }
 
-       public Portfolio(double cash, Dictionary<string, double> composition, DateTime date)
+       public Portfolio(double initValue, Dictionary<string, double> composition, Dictionary<string, double> spots, DateTime date)
         {
+            
+
             Composition = composition;
-            Cash = cash;
+            
+            double positionsCost = GetRiskyAssetValue(spots);
+            Cash = initValue - positionsCost;
+
             LastUpdateDate = date;
         }
 
         public double GetValue(Dictionary<string, double> spots, double riskFreeRate, double time)
         {
-            double value = GetDiscountedCash(riskFreeRate, time);
-            foreach (var asset in Composition.Keys)
-            {
-                if (spots.ContainsKey(asset))
-                {
-                    value += spots[asset] * Composition[asset];
-                } else
-                {
-                    throw new ArgumentException($"Spot price for asset {asset} missing.");
-                }
-            }
+            double value = GetDiscountedCash(riskFreeRate, time) + GetRiskyAssetValue(spots);
             
             return value;
         }
@@ -64,6 +59,23 @@ namespace FinancialApp.PorfolioManagement
         public double GetDiscountedCash(double riskFreeRate, double time)
         {
             return Cash * Math.Exp(riskFreeRate * time);
+        }
+
+        public double GetRiskyAssetValue(Dictionary<string, double> spots)
+        {
+            double value = 0.0;
+            foreach (var asset in Composition.Keys)
+            {
+                if (spots.ContainsKey(asset))
+                {
+                    value += spots[asset] * Composition[asset];
+                }
+                else
+                {
+                    throw new ArgumentException($"Spot price for asset {asset} missing.");
+                }
+            }
+            return value;
         }
 
     }

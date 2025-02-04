@@ -12,8 +12,11 @@ namespace options {
 
     public:
         // Constructor
-        OptionParameters(int _option_size, PnlVect* _strikes, PnlVect* _monitoring_dates)
-            : option_size(_option_size), strikes(_strikes), monitoring_dates(_monitoring_dates) {}
+        OptionParameters(int _option_size, const PnlVect* _strikes, const PnlVect* _monitoring_dates)
+            : option_size(_option_size) {
+            strikes = pnl_vect_copy(_strikes);
+            monitoring_dates = pnl_vect_copy(_monitoring_dates);
+        }
 
         // **Copy Constructor**
         OptionParameters(const OptionParameters& other)

@@ -51,7 +51,9 @@ namespace FinancialApp.Hedging
                     .Zip(pricingResults.Deltas, (share, delta) => new { share, delta })
                     .ToDictionary(couple => couple.share, couple => couple.delta);
 
-                _portfolio = new Portfolio(pricingResults.Price, composition, initData.Date);
+                _portfolio = new Portfolio(pricingResults.Price, composition, initData.SpotList, initData.Date);
+                var output = createOutputData(initData.Date, pricingResults, pricingResults.Price);
+                _outputData.Add(output);
             }
             catch (Exception ex)
             {

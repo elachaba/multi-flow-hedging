@@ -2,7 +2,7 @@
   "profiles": {
     "FinancialApp": {
       "commandName": "Project",
-      "commandLineArgs": "C:\\Users\\ASUS\\source\\repos\\Equipe_14\\EvalCases\\Basket_1\\basket_1_param.json\r\nC:\\Users\\ASUS\\source\\repos\\Equipe_14\\EvalCases\\Basket_1\\basket_1_mkt_data.csv\r\nC:\\Users\\ASUS\\source\\repos\\Equipe_14\\output\\portfolio1.json#"
+      "commandLineArgs": "C:\\Users\\ASUS\\source\\repos\\Equipe_14\\EvalCases\\Max_4\\max_4_param.json\r\nC:\\Users\\ASUS\\source\\repos\\Equipe_14\\EvalCases\\Max_4\\max_4_mkt_data.csv\r\nC:\\Users\\ASUS\\source\\repos\\Equipe_14\\output\\portfolio4.json"
     }
   }
 }
